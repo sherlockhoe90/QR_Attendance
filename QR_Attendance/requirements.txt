@@ -3,6 +3,6 @@
 2. tkinter - pip install tk-tools 
            - pip install tk
 
-3. pyzbar  - pip install pyzbar
+3. pyzbar  - apt-get install zbar-tools
 
 4. cv2     - pip install opencv-python
