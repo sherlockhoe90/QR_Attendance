@@ -11,7 +11,7 @@ for _ in range (0,len(lines)):
         str(data),
         level='H',
         version=1,
-        picture="Bg.png",
+#         picture="Bg.png",
         colorized=True,
         contrast=1.0,
         brightness=1.0,

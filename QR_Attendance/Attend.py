@@ -8,43 +8,31 @@ from tkinter import Frame, ttk, messagebox
 from tkinter import *
 
 window = tk.Tk()
-window.title('Attendance System V-089')
+window.title('Attendance- Uttistha Kaunteya:Roar of the Lion and the Lion Inside')
 window.geometry('900x600') 
                           
                           
-year= tk.StringVar()      
-branch= tk.StringVar()
-sec= tk.StringVar() 
-period= tk.StringVar()
+seminar= tk.StringVar()
+section= tk.StringVar()
 
-title = tk.Label(window,text="Attendance System V-089",bd=10,relief=tk.GROOVE,font=("times new roman",40),bg="lavender",fg="black")
+title = tk.Label(window,text="Attendance- Uttistha Kaunteya:Roar of the Lion and the Lion Inside",bd=10,relief=tk.GROOVE,font=("times new roman",23),bg="lavender",fg="black")
 title.pack(side=tk.TOP,fill=tk.X)
 
 Manage_Frame=Frame(window,bg="lavender")
 Manage_Frame.place(x=0,y=80,width=480,height=530)
 
-ttk.Label(window, text = "Year",background="lavender", foreground ="black",font = ("Times New Roman", 15)).place(x=100,y=150)
-combo_search=ttk.Combobox(window,textvariable=year,width=10,font=("times new roman",13),state='readonly')
-combo_search['values']=('1','2','3','4') 
-combo_search.place(x=250,y=150)
-
-ttk.Label(window, text = "Branch",background="lavender", foreground ="black",font = ("Times New Roman", 15)).place(x=100,y=200)
-combo_search=ttk.Combobox(window,textvariable=branch,width=10,font=("times new roman",13),state='readonly')
-combo_search['values']=("CSE","ECE","EEE","IT","MECH","ECM")
+ttk.Label(window, text = "Seminar",background="lavender", foreground ="black",font = ("Times New Roman", 15)).place(x=100,y=200)
+combo_search=ttk.Combobox(window,textvariable=seminar,width=15,font=("times new roman",13),state='readonly')
+combo_search['values']=("Uttistha_Kaunteya: Roar_of the_Lion and_the Lion_Inside")
 combo_search.place(x=250,y=200)
 
-ttk.Label(window, text = "Section",background="lavender", foreground ="black",font = ("Times New Roman", 15)).place(x=100,y=250)
-combo_search=ttk.Combobox(window,textvariable=sec,width=10,font=("times new roman",13),state='readonly')
-combo_search['values']=('A','B','C','D')
-combo_search.place(x=250,y=250)
-
-ttk.Label(window, text = "Period",background="lavender", foreground ="black",font = ("Times New Roman", 15)).place(x=100,y=300)
-combo_search=ttk.Combobox(window,textvariable=period,width=10,font=("times new roman",13),state='readonly')
-combo_search['values']=('1','2','3','4','5','6','7')
+ttk.Label(window, text = "Section",background="lavender", foreground ="black",font = ("Times New Roman", 15)).place(x=100,y=300)
+combo_search=ttk.Combobox(window,textvariable=section,width=15,font=("times new roman",13),state='readonly')
+combo_search['values']=("Yuvak", "Yuvati")
 combo_search.place(x=250,y=300)
 
 def checkk():
-    if(year.get() and branch.get() and period.get() and sec.get()):
+    if(seminar.get() and section.get()):
         window.destroy()
     else:
         messagebox.showwarning("Warning", "All fields required!!")
@@ -57,51 +45,66 @@ exit_button.place(x=300,y=380)
 Manag_Frame=Frame(window,bg="lavender")
 Manag_Frame.place(x=480,y=80,width=450,height=530)
 
-canvas = Canvas(Manag_Frame, width = 300, height = 300,background="lavender")      
-canvas.pack()      
-img = PhotoImage(file="Bg.png")      
-canvas.create_image(50,50, anchor=NW, image=img) 
+canvas = Canvas(Manag_Frame, width = 300, height = 300,background="lavender")
+canvas.pack()
+img = PhotoImage(file="uttishthakaunteya_1.png")
+canvas.create_image(50,50, anchor=NW, image=img)
 
 window.mainloop()
+
+if not section.get(): #if the section is not chosen, set the default to Yuva
+    section.set("Yuva")
 
 cap = cv2.VideoCapture(0)
 names=[]
 today=date.today()
+current_time = datetime.now().strftime("%H-%M-%S")
 d= today.strftime("%b-%d-%Y")
 
-fob=open(d+'.xlsx','w+')
+fob=open(f"{d}_{current_time}.xlsx",'w+')
 fob.write("Reg No."+'\t')
-fob.write("Class & Sec"+'\t')
-fob.write("Year"+'\t')
-fob.write("Period"+'\t')
+fob.write("Full Name"+'\t')
+fob.write("Mandal"+'\t')
+fob.write("Yuvak/Yuvati"+'\t')
+fob.write("Mobile"+'\t')
 fob.write("In Time"+'\n')
 
-def enterData(z):   
-    if z in names:
-        pass
-    else:
-        it=datetime.now()
-        names.append(z)
-        z=''.join(str(z))
-        intime = it.strftime("%H:%M:%S")
-        fob.write(z+'\t'+branch.get()+'-'+sec.get()+'\t'+year.get()+'\t'+period.get()+'\t'+intime+'\n')
-    return names 
-    
+def enterData(reg_no, full_name, mandal, mobile):
+
+                it = datetime.now()
+                names.append(reg_no)
+                intime = it.strftime("%H:%M:%S")
+                data = f"{reg_no}\t{full_name}\t{mandal}\t{mobile}\t{intime}\n"
+                fob.write(reg_no+'\t'+full_name+'\t'+mandal+'\t'+section.get()+'\t'+mobile+'\t'+intime+'\n')
+
+                return names
+
 print('Reading...')
 
-def checkData(data):
-    # data=str(data)    
-    if data in names:
+def checkData(reg_no, full_name, mandal, mobile):
+    # data=str(data)
+    if reg_no in names:
         print('Already Present')
     else:
-        print('\n'+str(len(names)+1)+'\n'+'present...')
-        enterData(data)
+        print('New entry detected...')
+        enterData(reg_no, full_name, mandal, mobile)
+        print('SAVED')
+
 
 while True:
-    _, frame = cap.read()         
+    _, frame = cap.read()
     decodedObjects = pyzbar.decode(frame)
     for obj in decodedObjects:
-        checkData(obj.data)
+        data = obj.data.decode('utf-8').split()
+        if len(data) == 5:
+            if len(data) == 5 and data[0].startswith('EID'):
+                reg_no = data[0][3:] # SKIPS THE EID FROM THE ID eg. EID777777
+                full_name = data[1] + ' ' + data[2]
+                mandal = data[3]
+                mobile = data[4]
+            checkData(reg_no, full_name, mandal, mobile)
+        else:
+            print("Invalid QR code")
         time.sleep(1)
        
     cv2.imshow("Frame", frame)
