@@ -86,7 +86,7 @@ def checkData(reg_no, full_name, mandal, mobile):
     if reg_no in names:
         print('Already Present')
     else:
-        print('New entry detected...')
+        print('New entry detected...' + full_name + ' ' + mandal + ' ' + reg_no)
         enterData(reg_no, full_name, mandal, mobile)
         print('SAVED')
 
