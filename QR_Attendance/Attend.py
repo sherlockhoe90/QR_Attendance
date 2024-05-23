@@ -84,7 +84,7 @@ print('Reading...')
 def checkData(reg_no, full_name, mandal, mobile):
     # data=str(data)
     if reg_no in names:
-        print('Already Present')
+        print('Already Present : ' + reg_no + ' ' + full_name)
     else:
         print('New entry detected...' + full_name + ' ' + mandal + ' ' + reg_no)
         enterData(reg_no, full_name, mandal, mobile)
